@@ -4,12 +4,12 @@ import streamlit as st
 import asyncio
 import random
 from agents import Agent, ItemHelpers, Runner, function_tool
-from triage_agent import triage_agent
+from cofounder.custom_agents.cofounder_agent import cofounder_agent
 
 
 async def main():
 
-    st.title("Assistant Chat")
+    st.title("Cofounder Agent")
 
     if "messages" not in st.session_state:
         st.session_state.messages = []
@@ -26,8 +26,8 @@ async def main():
         with st.chat_message("assistant"):
 
             result = Runner.run_streamed(
-                triage_agent,
-                input=prompt,
+                cofounder_agent,
+                input=st.session_state.messages,
             )
             async for event in result.stream_events():
                 # We'll ignore the raw responses event deltas
